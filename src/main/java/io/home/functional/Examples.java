@@ -1,6 +1,8 @@
 package io.home.functional;
 
+import java.util.IntSummaryStatistics;
 import java.util.function.Predicate;
+import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 
 public class Examples {
@@ -14,16 +16,25 @@ public class Examples {
 
     public static void main(String[] args) {
         System.out.println();
-        System.out.println("isPrime(7) = "+isPrime(71));
+        System.out.println("\nisPrime(7) = "+isPrime(71));
 
-        System.out.println("Tracking execution");
+        System.out.println("\nTracking execution");
         int result = IntStream.range(1, 10)
                 .filter(Examples::isGreaterThan3)
+                .skip(2)
                 .filter(Examples::isEven)
                 .map(Examples::doubleIt)
                 .findFirst()
                 .getAsInt();
-        System.out.println(result);
+        System.out.println("Result = "+result);
+
+        double total = DoubleStream.of(7.3, 1.5, 4.8)
+                .reduce(0.0, (left, right) -> left + right);
+        System.out.println("\nTotal using reduce() = "+total);
+
+        IntSummaryStatistics intSummaryStatistics = IntStream.of(7, 2, 19, 88, 73, 4 ,10)
+                .summaryStatistics();
+        System.out.println("\n"+intSummaryStatistics);
     }
 
     static boolean isGreaterThan3(int n) {
